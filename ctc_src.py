@@ -81,7 +81,7 @@ class Scorer(object):
         return score
 
 #beam search decoding without log sum exponent
-def prefix_bsp(out,labels,scorer,log=False,prune=0.00001,beam_size=25,alpha=1.45,beta=3,lm=None,w_t_o_b=250):
+def prefix_bsp(out,labels,scorer,log=False,prune=0.00001,beam_size=25,w_t_o_b=50):
     
     blank_symbol = '_'
     F = out.shape[1] # length of labels
@@ -149,7 +149,7 @@ def prefix_bsp(out,labels,scorer,log=False,prune=0.00001,beam_size=25,alpha=1.45
 # wer_(beam_txt,reference)/len(reference.strip().split(' '))*100
 
 #beam search decoding with log sum exponent
-def prefix_bsl(out,labels,scorer,log=False,prune=0.00001,beam_size=20,alpha=0.01,beta=0,lm=None,w_t_o_b=10):
+def prefix_bsl(out,labels,scorer,log=False,prune=0.00001,beam_size=20,w_t_o_b=10):
     
     blank_symbol = '_'
     F = out.shape[1] # length of labels

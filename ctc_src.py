@@ -81,7 +81,8 @@ class Scorer(object):
         return score
 
 #beam search decoding without log sum exponent
-def prefix_bsp(out,labels,scorer,log=False,prune=0.00001,beam_size=25,w_t_o_b=50):
+def prefix_bsp(out,labels,scorer,log=False,prune=0.00001,beam_size=25,w_t_o_b=50,
+               nproc=False):
     
     blank_symbol = '_'
     F = out.shape[1] # length of labels
@@ -89,6 +90,10 @@ def prefix_bsp(out,labels,scorer,log=False,prune=0.00001,beam_size=25,w_t_o_b=50
     
     t_b = [('', (1.0 ,0.0 ))] # beam at every time step gets updated
     t_1 = None
+    if nproc is True:
+        print('nproc')
+        global ext_nproc_scorer
+        scorer = ext_nproc_scorer
     
     for t in range(0,steps):
         pruned_alphabet = [labels[i] for i in np.where(out[t]>prune)[0]]
